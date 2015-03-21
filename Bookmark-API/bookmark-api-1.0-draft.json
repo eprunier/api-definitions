@@ -1,0 +1,147 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0-DRAFT",
+        "title": "Bookmark API"
+    },
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/bookmarks": {
+            "get": {
+                "description": "List bookmarks.\nThe list can be filtered, sorted and limited.\n",
+                "parameters": [
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "First bookmark to return.",
+                        "required": false,
+                        "type": "number",
+                        "default": 0
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Max number of bookmarks to return.",
+                        "required": false,
+                        "type": "number",
+                        "default": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "title": "ArrayOfBookmarks",
+                            "type": "array",
+                            "items": {
+                                "schema": {
+                                    "$ref": "#/definitions/bookmark"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "401": {
+                        "description": "Request unauthorized (authentication error)",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new bookmark\n",
+                "responses": {
+                    "201": {
+                        "description": "Bookmark created",
+                        "schema": {
+                            "$ref": "#/definitions/bookmark"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "401": {
+                        "description": "Request unauthorized (authentication error)",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    },
+                    "500": {
+                        "description": "Internal error",
+                        "schema": {
+                            "$ref": "#/definitions/error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "error": {
+            "properties": {
+                "code": {
+                    "description": "Error code",
+                    "type": "number"
+                },
+                "message": {
+                    "description": "Error message",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "code",
+                "message"
+            ]
+        },
+        "bookmark": {
+            "properties": {
+                "title": {
+                    "description": "Bookmark title",
+                    "type": "string"
+                },
+                "url": {
+                    "description": "Target URL",
+                    "type": "string"
+                },
+                "summary": {
+                    "description": "Bookmark summary",
+                    "type": "string"
+                },
+                "tags": {
+                    "description": "List of tags",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "favorite": {
+                    "description": "In favorites",
+                    "type": "boolean"
+                }
+            },
+            "required": [
+                "url"
+            ]
+        }
+    }
+}

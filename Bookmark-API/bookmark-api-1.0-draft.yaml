@@ -42,19 +42,44 @@ paths:
             $ref: '#/definitions/error'
         401:
           description: Request unauthorized (authentication error)
+          schema:
+            $ref: '#/definitions/error'
         500:
           description: Internal error
+          schema: 
+            $ref: '#/definitions/error'
     post:
       description: |
         Add a new bookmark
       responses:
         201:
           description: Bookmark created
+          schema: 
+            $ref: '#/definitions/bookmark'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error'
         401:
           description: Request unauthorized (authentication error)
+          schema:
+            $ref: '#/definitions/error'
         500:
           description: Internal error
+          schema:
+            $ref: '#/definitions/error'
 definitions:
+  error:
+    properties:
+      code: 
+        description: Error code
+        type: number
+      message:
+        description: Error message
+        type: string
+    required:
+      - code
+      - message
   bookmark:
     properties:
       title:
@@ -62,6 +87,9 @@ definitions:
         type: string
       url:
         description: Target URL
+        type: string
+      summary:
+        description: Bookmark summary
         type: string
       tags:
         description: List of tags
@@ -71,12 +99,5 @@ definitions:
       favorite:
         description: In favorites
         type: boolean
-  error:
-    properties:
-      status:
-        description: Error code
-        type: number
-        format: integer
-      message:
-        description: Error description
-        type: string
+    required:
+      - url
