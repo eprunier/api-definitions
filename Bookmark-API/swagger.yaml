@@ -13,7 +13,7 @@ paths:
     get:
       description: |
         List bookmarks.
-        The list can be filtered, sorted and limited.
+        The list can be paginated.
       parameters:
         - name: offset
           in: query
@@ -49,13 +49,76 @@ paths:
           schema: 
             $ref: '#/definitions/error'
     post:
-      description: |
-        Add a new bookmark
+      description: Add a new bookmark
+      parameters:
+        - name: bookmark
+          in: body
+          description: Bookmark to add
+          required: true
+          schema:
+            $ref: '#/definitions/bookmark'
       responses:
         201:
           description: Bookmark created
           schema: 
             $ref: '#/definitions/bookmark'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error'
+        401:
+          description: Request unauthorized (authentication error)
+          schema:
+            $ref: '#/definitions/error'
+        500:
+          description: Internal error
+          schema:
+            $ref: '#/definitions/error'
+  /bookmarks/{id}:
+    put:
+      description: Update a bookmark
+      parameters:
+        - name: id
+          in: path
+          description: ID of the bookmark to update
+          type: string
+          required: true
+        - name: bookmark
+          in: body
+          description: Bookmark
+          required: true
+          schema:
+            $ref: '#/definitions/bookmark'
+      responses:
+        200: 
+          description: Bookmark updated
+          schema:
+            description: Updated bookmark
+            schema: 
+              $ref: '#/definitions/bookmark'
+        400:
+          description: Bad request
+          schema:
+            $ref: '#/definitions/error'
+        401:
+          description: Request unauthorized (authentication error)
+          schema:
+            $ref: '#/definitions/error'
+        500:
+          description: Internal error
+          schema:
+            $ref: '#/definitions/error'
+    delete:
+      description: Delete a bookmark
+      parameters:
+        - name: id
+          description: ID of the bookmark to delete
+          in: path
+          type: string
+          required: true
+      responses:
+        204:
+          description: Bookmark deleted
         400:
           description: Bad request
           schema:
@@ -91,8 +154,8 @@ definitions:
       summary:
         description: Bookmark summary
         type: string
-      tags:
-        description: List of tags
+      keywords:
+        description: List of keywords
         type: array
         items: 
           type: string
