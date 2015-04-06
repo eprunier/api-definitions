@@ -40,7 +40,7 @@
                             "type": "array",
                             "items": {
                                 "schema": {
-                                    "$ref": "#/definitions/bookmark"
+                                    "$ref": "#/definitions/Bookmark"
                                 }
                             }
                         }
@@ -48,19 +48,19 @@
                     "400": {
                         "description": "Bad request",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "401": {
                         "description": "Request unauthorized (authentication error)",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "500": {
                         "description": "Internal error",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     }
                 }
@@ -74,7 +74,7 @@
                         "description": "Bookmark to add",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/bookmark"
+                            "$ref": "#/definitions/Bookmark"
                         }
                     }
                 ],
@@ -82,31 +82,63 @@
                     "201": {
                         "description": "Bookmark created",
                         "schema": {
-                            "$ref": "#/definitions/bookmark"
+                            "$ref": "#/definitions/Bookmark"
                         }
                     },
                     "400": {
                         "description": "Bad request",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "401": {
                         "description": "Request unauthorized (authentication error)",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "500": {
                         "description": "Internal error",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     }
                 }
             }
         },
         "/bookmarks/{id}": {
+            "get": {
+                "description": "Get a bookmark",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the bookmark",
+                        "type": "string",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success",
+                        "schema": {
+                            "$ref": "#/definitions/Bookmark"
+                        }
+                    },
+                    "401": {
+                        "description": "Request unauthorized (authentication error)",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "404": {
+                        "description": "Bookmark not found",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            },
             "put": {
                 "description": "Update a bookmark",
                 "parameters": [
@@ -123,7 +155,7 @@
                         "description": "Bookmark",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/bookmark"
+                            "$ref": "#/definitions/Bookmark"
                         }
                     }
                 ],
@@ -133,26 +165,26 @@
                         "schema": {
                             "description": "Updated bookmark",
                             "schema": {
-                                "$ref": "#/definitions/bookmark"
+                                "$ref": "#/definitions/Bookmark"
                             }
                         }
                     },
                     "400": {
                         "description": "Bad request",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "401": {
                         "description": "Request unauthorized (authentication error)",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "500": {
                         "description": "Internal error",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     }
                 }
@@ -175,19 +207,19 @@
                     "400": {
                         "description": "Bad request",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "401": {
                         "description": "Request unauthorized (authentication error)",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     },
                     "500": {
                         "description": "Internal error",
                         "schema": {
-                            "$ref": "#/definitions/error"
+                            "$ref": "#/definitions/Error"
                         }
                     }
                 }
@@ -195,7 +227,7 @@
         }
     },
     "definitions": {
-        "error": {
+        "Error": {
             "properties": {
                 "code": {
                     "description": "Error code",
@@ -211,7 +243,7 @@
                 "message"
             ]
         },
-        "bookmark": {
+        "Bookmark": {
             "properties": {
                 "title": {
                     "description": "Bookmark title",
