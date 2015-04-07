@@ -21,7 +21,8 @@
                         "description": "First bookmark to return.",
                         "required": false,
                         "type": "number",
-                        "default": 0
+                        "default": 0,
+                        "minimum": 0
                     },
                     {
                         "name": "limit",
@@ -29,7 +30,9 @@
                         "description": "Max number of bookmarks to return.",
                         "required": false,
                         "type": "number",
-                        "default": 10
+                        "default": 10,
+                        "minimum": 1,
+                        "maximum": 100
                     }
                 ],
                 "responses": {
@@ -267,6 +270,18 @@
                 "favorite": {
                     "description": "In favorites",
                     "type": "boolean"
+                },
+                "archived": {
+                    "description": "Archived bookmark",
+                    "type": "boolean"
+                },
+                "creationDate": {
+                    "description": "Creation date (ISO 8601)",
+                    "type": "string"
+                },
+                "modificationDate": {
+                    "description": "Last modification date (ISO 8601)",
+                    "type": "string"
                 }
             },
             "required": [

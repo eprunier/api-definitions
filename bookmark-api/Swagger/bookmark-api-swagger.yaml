@@ -21,20 +21,23 @@ paths:
           required: false
           type: number
           default: 0
+          minimum: 0
         - name: limit
           in: query
           description: Max number of bookmarks to return.
           required: false
           type: number
           default: 10
+          minimum: 1
+          maximum: 100
       responses:
         200:
           description: Successful response
           schema:
             title: ArrayOfBookmarks
             type: array
-            items: 
-              schema: 
+            items:
+              schema:
                 $ref: '#/definitions/Bookmark'
         400:
           description: Bad request
@@ -46,7 +49,7 @@ paths:
             $ref: '#/definitions/Error'
         500:
           description: Internal error
-          schema: 
+          schema:
             $ref: '#/definitions/Error'
     post:
       description: Add a new bookmark
@@ -60,7 +63,7 @@ paths:
       responses:
         201:
           description: Bookmark created
-          schema: 
+          schema:
             $ref: '#/definitions/Bookmark'
         400:
           description: Bad request
@@ -111,11 +114,11 @@ paths:
           schema:
             $ref: '#/definitions/Bookmark'
       responses:
-        200: 
+        200:
           description: Bookmark updated
           schema:
             description: Updated bookmark
-            schema: 
+            schema:
               $ref: '#/definitions/Bookmark'
         400:
           description: Bad request
@@ -155,7 +158,7 @@ paths:
 definitions:
   Error:
     properties:
-      code: 
+      code:
         description: Error code
         type: number
       message:
@@ -178,10 +181,19 @@ definitions:
       keywords:
         description: List of keywords
         type: array
-        items: 
+        items:
           type: string
       favorite:
         description: In favorites
         type: boolean
+      archived:
+        description: Archived bookmark
+        type: boolean
+      creationDate:
+        description: Creation date (ISO 8601)
+        type: string
+      modificationDate:
+        description: Last modification date (ISO 8601)
+        type: string
     required:
       - url

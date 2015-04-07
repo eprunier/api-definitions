@@ -1,0 +1,121 @@
+#%RAML 0.8
+title: Bookmark API
+version: 1.0-DRAFT
+mediaType: application/json
+schemas:
+  - Bookmark: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "description": "A bookmark",
+        "properties": {
+          "title": {
+            "description": "Bookmark title",
+            "type": "string"
+          },
+          "url": {
+            "description": "Target URL",
+            "type": "string"
+          },
+          "summary": {
+            "description": "Bookmark summary",
+            "type": "string"
+          },
+          "keywords": {
+            "description": "List of keywords",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "favorite": {
+            "description": "In favorites",
+            "type": "boolean"
+          },
+          "archived": {
+            "description": "Archived bookmark",
+            "type": "boolean"
+          },
+          "creationDate": {
+            "description": "Creation date",
+            "type": "date"
+          },
+          "modificationDate": {
+            "description": "Last modification date",
+            "type": "date"
+          }
+        },
+        "required": [ "url" ]
+      }
+  - Error: |
+      {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {
+          "code": {
+            "description": "Error code",
+            "type": "number"
+          },
+          "message": {
+            "description": "Error message",
+            "type": "string"
+          }
+        },
+        "required": ["code", "message"]
+      }
+traits:
+  - BaseResponse:
+      responses:
+        400:
+          description: Bad request
+          body:
+            application/json:
+              schema: Error
+        401:
+          description: Request unauthorized (authentication error)
+          body:
+            application/json:
+              schema: Error
+        500:
+          description: Internal error
+          body:
+            application/json:
+              schema: Error
+/bookmarks:
+  get:
+    is: [BaseResponse]
+    description: |
+      List bookmarks.
+      The list can be paginated.
+    queryParameters:
+      offset:
+        description: First bookmark to return.
+        type: number
+        required: false
+        default: 0
+        minimum: 0
+      limit:
+        description: Max number of bookmarks to return.
+        type: number
+        required: false
+        default: 10
+        maximum: 100
+        minimum: 1
+    responses:
+      200:
+        description: Successful response
+        body:
+          application/json:
+            schema: Bookmark
+  post:
+    is: [BaseResponse]
+    description: Add a new bookmark
+    body:
+      application/json:
+        schema: Bookmark
+    responses:
+      201:
+        description: Bookmark created
+        body:
+          application/json:
+            schema: Bookmark
