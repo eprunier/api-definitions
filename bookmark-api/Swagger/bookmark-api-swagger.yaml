@@ -37,8 +37,7 @@ paths:
             title: ArrayOfBookmarks
             type: array
             items:
-              schema:
-                $ref: '#/definitions/Bookmark'
+              $ref: '#/definitions/Bookmark'
         400:
           description: Bad request
           schema:
@@ -117,9 +116,7 @@ paths:
         200:
           description: Bookmark updated
           schema:
-            description: Updated bookmark
-            schema:
-              $ref: '#/definitions/Bookmark'
+            $ref: '#/definitions/Bookmark'
         400:
           description: Bad request
           schema:
@@ -197,3 +194,5 @@ definitions:
         type: string
     required:
       - url
+      - creationDate
+      - modificationDate
